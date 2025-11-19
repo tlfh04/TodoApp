@@ -5,7 +5,7 @@
 >
 
 <div layout:fragment="content">
-
+    <div th:if="${massage}" class="alert alert-primary alert-dismissible fade show"><span th:text="${massage}"></span><button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
     <div class="card">
         <div class="card-body">
             <h5 class="card-title" th:text="${todo.title}"></h5>

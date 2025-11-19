@@ -4,7 +4,10 @@
       layout:decorate="~{layout/default}"
 >
 <div layout:fragment="content">
-
+    <div th:if="${massage}" th:classappend="${status == 'delete'?'alert-danger':'alert-primary'}" class="alert alert-dismissible fade show">
+        <span th:text="${massage}"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
     <table class="table table-striped">
         <thead>
         <th>ID</th>
