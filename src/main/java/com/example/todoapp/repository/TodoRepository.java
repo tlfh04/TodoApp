@@ -4,9 +4,9 @@ import com.example.todoapp.dto.TodoDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -26,11 +26,23 @@ public class TodoRepository {
         return new ArrayList<>(storage.values());
     }
 
-    public TodoDto findById(Long id) {
-        return storage.get(id);
+    public Optional<TodoDto> findById(Long id) {
+        return Optional.ofNullable(storage.get(id));
     }
 
     public void deleteById(Long id) {
         storage.remove(id);
+    }
+    public List<TodoDto> findByTitleContaining(String keyword) {
+        return storage.values().stream()
+                .filter((todo) -> todo.getTitle().contains(keyword))
+                .toList();
+
+    }
+
+    public List<TodoDto> findByCompleted(boolean completed) {
+        return storage.values().stream()
+                .filter(todo -> todo.isCompleted() == completed)
+                .toList();
     }
 }
