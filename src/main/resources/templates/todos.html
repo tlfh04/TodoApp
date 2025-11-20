@@ -4,9 +4,10 @@
       layout:decorate="~{layout/default}"
 >
 <div layout:fragment="content">
-    <div th:if="${massage}" th:classappend="${status == 'delete'?'alert-danger':'alert-primary'}" class="alert alert-dismissible fade show">
-        <span th:text="${massage}"></span>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div>
+        <p>전체 : <span th:text="${allCount}"></span></p>
+        <p>완료 : <span th:text="${noCompletedCount}"></span></p>
+        <p>미완료 : <span th:text="${completedCount}"></span></p>
     </div>
     <table class="table table-striped">
         <thead>
@@ -28,7 +29,6 @@
             </td>
         </tr>
         </tbody>
-
     </table>
 
 
