@@ -45,35 +45,20 @@ public class TodoController {
             @ModelAttribute TodoDto todo,
             RedirectAttributes redirectAttributes
     ){
-//        TodoDto todoDto = new TodoDto(null, title, content, false);
-//        TodoRepository todoRepository = new TodoRepository();
-//        TodoDto todo = todoRepository.save(todoDto);
-        try{
-            todoService.createTodo(todo);
-            redirectAttributes.addFlashAttribute("massage","할 일이 생성되었습니다.");
-            return "redirect:/todos";
-        }catch (IllegalArgumentException e){
-            redirectAttributes.addFlashAttribute("error",e.getMessage());
-            return "redirect:/todos/new";
-        }
 
-//        return "create";
+        todoService.createTodo(todo);
+        redirectAttributes.addFlashAttribute("massage","할 일이 생성되었습니다.");
+        return "redirect:/todos";
+
     }
 
     @GetMapping("/{id}")
     public String detail(@PathVariable Long id, Model model) {
-//        TodoDto todo = todoRepository.findById(id);
+        TodoDto todo = todoService.getTodoById(id);
 
-        try {
-            TodoDto todo = todoService.getTodoById(id);
-//                    .orElseThrow(() -> new IllegalArgumentException("todo not found!!!!!!"));
+        model.addAttribute("todo", todo);
+        return "detail";
 
-            model.addAttribute("todo", todo);
-            return "detail";
-
-        } catch (IllegalArgumentException e) {
-            return "redirect:/todos";
-        }
     }
 
     @GetMapping("/{id}/delete")
@@ -87,14 +72,10 @@ public class TodoController {
 
     @GetMapping("/{id}/update")
     public String edit(@PathVariable Long id, Model model) {
-        try {
-            TodoDto todo = todoService.getTodoById(id);
-//                    .orElseThrow(() -> new IllegalArgumentException("todo not found!!!!!!!!"));
-            model.addAttribute("todo", todo);
-            return "update";
-        } catch (IllegalArgumentException e) {
-            return "redirect:/todos";
-        }
+
+        TodoDto todo = todoService.getTodoById(id);
+        model.addAttribute("todo", todo);
+        return "update";
     }
 
     @PostMapping("/{id}/update")
@@ -104,14 +85,9 @@ public class TodoController {
             RedirectAttributes redirectAttributes,
             Model model) {
 
-        try {
-            todoService.updateTodoById(id, todo);
-            redirectAttributes.addFlashAttribute("massage","정상적으로 수정되었습니다.");
-            return "redirect:/todos/" + id;
-        } catch (IllegalArgumentException e) {
-            redirectAttributes.addFlashAttribute("message", "없는 할일입니다.");
-            return "redirect:/todos";
-        }
+        todoService.updateTodoById(id, todo);
+        redirectAttributes.addFlashAttribute("massage","정상적으로 수정되었습니다.");
+        return "redirect:/todos/" + id;
 
     }
 
